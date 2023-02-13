@@ -1,3 +1,5 @@
+import datetime
+
 import pyautogui
 from win32api import GetSystemMetrics
 import time
@@ -7,6 +9,7 @@ import math
 import statistics
 from PIL import Image, ImageFilter
 from langdetect import detect
+import pyperclip
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 Column_Coords = [0, 0]
@@ -126,9 +129,19 @@ def neerestWord(word_main: str, word_sub: str, lang: str):
 data = pd.DataFrame(pd.read_excel(
     io=r'C:\Users\drtar\Desktop\SmartTesterForBoas\Копия (Агрегатор Т1) ТК для тестирования интеграции между ELMA и IMOS (3).xlsx',
     engine='openpyxl'))
+out_tab = data.copy()
 frame = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\frame.bmp'
 full_frame = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\full_frame.bmp'
 ok_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\ok_button.bmp'
+error_wind = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\error_wind.bmp'
+active_ok_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\active_ok_button.bmp'
+text_field = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\text_field.bmp'
+use_config_wind = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\use_config_wind.bmp'
+active_yes_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\active_yes_button.bmp'
+show_spec_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\show_spec_button.bmp'
+one_c_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\one_c_button.bmp'
+exit_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\exit_button.bmp'
+config_set_button = r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\config_set_button.bmp'
 
 # print(data.columns[0])
 colum_name = []
@@ -139,40 +152,97 @@ for index in range(columns_count):
 # print(colum_name[0][0])
 # print(colum_name[0][1])
 #pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
+
 for index, row in data.iterrows():
-    #print(row[0] + '|' + row[1])
-    first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
-    pyautogui.leftClick(neerestFigure(frame, first_name))
-    pyautogui.sleep(.2)
-    # listWordSearch()
-    # print(row[0])
-    # print(detect(row[0]))
-    if detect(row[0]) == 'ru':
-        pyautogui.leftClick(centerWordSearch(row[0], 'rus'))
-    # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-    else:
-        pyautogui.leftClick(centerWordSearch(row[0], 'eng'))
-    pyautogui.sleep(.2)
-    print(colum_name[1][0] + '|' + colum_name[1][1])
-    second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
-    pyautogui.leftClick(neerestFigure(frame, second_name))
-    pyautogui.sleep(.2)
-    print(row[1] + detect(row[1]))
-    if len(row[1].split(" ")) == 1:
-        if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-                or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-            pyautogui.leftClick(centerWordSearch(row[1], 'rus'))
+    try:
+        # Нахождение названия свойства и элемента со списком
+        #print(row[0] + '|' + row[1])
+        first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
+        pyautogui.leftClick(neerestFigure(frame, first_name))
+        pyautogui.sleep(.2)
+        # listWordSearch()
+        # print(row[0])
+        # print(detect(row[0]))
+        if detect(row[0]) == 'ru':
+            pyautogui.leftClick(centerWordSearch(row[0], 'rus'))
         # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
         else:
-            pyautogui.leftClick(centerWordSearch(row[1], 'eng'))
-    elif len(row[1].split(" ")) == 2:
-        words = row[1].split(" ")
-        if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-                or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-            pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
-        # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-        else:
-            pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
-    pyautogui.sleep(.2)
+            pyautogui.leftClick(centerWordSearch(row[0], 'eng'))
+        pyautogui.sleep(.2)
+        print(colum_name[1][0] + '|' + colum_name[1][1])
+        second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
+        pyautogui.leftClick(neerestFigure(frame, second_name))
+        # Нахождение нужного значения
+        for index_value in range(columns_count-1):
+            index_value += 1
+            print(row[index_value] + detect(row[index_value]))
+            if len(row[index_value].split(" ")) == 1:
+                if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
+                        or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
+                    pyautogui.leftClick(centerWordSearch(row[index_value], 'rus'))
+                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+                else:
+                    pyautogui.leftClick(centerWordSearch(row[index_value], 'eng'))
+            elif len(row[index_value].split(" ")) == 2:
+                words = row[index_value].split(" ")
+                if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
+                        or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
+                    pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
+                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+                else:
+                    pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
+            pyautogui.sleep(.2)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
+            pyautogui.sleep(.2)
+            if pyautogui.locateCenterOnScreen(error_wind) != None:
+                pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button))
+                pyautogui.sleep(.2)
+            pyautogui.leftClick(neerestFigure(text_field, "Номер"))
+            pyautogui.sleep(.2)
+            pyautogui.write(datetime.datetime.strptime(datetime.datetime.now(), '%Y-%m-%d|%H:%M:%S.%f'))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
+            pyautogui.sleep(.2)
+            if pyautogui.locateCenterOnScreen(use_config_wind) != None:
+                pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))
+                pyautogui.sleep(.2)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
+            pyautogui.sleep(.5)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(one_c_button))
+            pyautogui.sleep(1)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+            pyautogui.sleep(.2)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+            pyautogui.sleep(.2)
+        out_tab["Статус"][index_value] = "Succes"
+        out_tab["Ссылка на json"][index_value] = pyperclip.paste()
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
+        pyautogui.sleep(.2)
+    except:
+        out_tab["Статус"][index_value] = "False"
+    # create excel writer
+    writer = pd.ExcelWriter(r'C:\Users\drtar\Desktop\SmartTesterForBoas\logs.xlsx')
+    # write dataframe to excel sheet named 'marks'
+    out_tab.to_excel(writer, 'marks')
+    # save the excel file
+    writer.save()
+
+    # pyautogui.sleep(.2)
+    # print(row[1] + detect(row[1]))
+    # if len(row[1].split(" ")) == 1:
+    #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
+    #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
+    #         pyautogui.leftClick(centerWordSearch(row[1], 'rus'))
+    #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+    #     else:
+    #         pyautogui.leftClick(centerWordSearch(row[1], 'eng'))
+    # elif len(row[1].split(" ")) == 2:
+    #     words = row[1].split(" ")
+    #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
+    #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
+    #         pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
+    #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+    #     else:
+    #         pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
+    # pyautogui.sleep(.2)
     # pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
 # print(str(coords[0]) + ', ' + str(coords[1]))
