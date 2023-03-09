@@ -234,14 +234,6 @@ for index, row in data.iterrows():
         bar.next()
         pyautogui.sleep(.2)
         pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
-        # temp = findWordWithPicrure(ok_cancel_toolbar, "OK", 'eng')
-        # pyautogui.leftClick(temp)#centerWordSearch("OK", 'eng', False))
-        # pyautogui.sleep(.2)
-        # if pyautogui.locateCenterOnScreen(error_wind) != None:
-        #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-        #     pyautogui.sleep(.2)
-        # pyautogui.leftClick(neerestFigure(text_field, "Номер"))
-        # pyautogui.sleep(.2)
         deal_count_cords = neerestWord("Номер", "(название)", 'rus')
         deal_count_cords[1] += 20
         pyautogui.doubleClick(deal_count_cords)
