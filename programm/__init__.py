@@ -213,100 +213,100 @@ for index, row in data.iterrows():
     #print("ОТЛАДКА!!!!")
     # Нахождение нужного значения
     for index_value in range(columns_count-1):
-        try:
-            index_value += 1
-            #print(row[index_value] + detect(row[index_value]))
-            if len(row[index_value].split(" ")) == 1:
-                if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
-                        or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
-                    pyautogui.leftClick(centerWordSearch(row[index_value], 'rus', True))
-                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-                else:
-                    pyautogui.leftClick(centerWordSearch(row[index_value], 'eng', True))
-            elif len(row[index_value].split(" ")) == 2:
-                words = row[index_value].split(" ")
-                if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
-                        or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
-                    pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
-                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-                else:
-                    pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
-            bar.next()
+        # try:
+        index_value += 1
+        #print(row[index_value] + detect(row[index_value]))
+        if len(row[index_value].split(" ")) == 1:
+            if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
+                    or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
+                pyautogui.leftClick(centerWordSearch(row[index_value], 'rus', True))
+            # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+            else:
+                pyautogui.leftClick(centerWordSearch(row[index_value], 'eng', True))
+        elif len(row[index_value].split(" ")) == 2:
+            words = row[index_value].split(" ")
+            if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
+                    or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
+                pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
+            # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+            else:
+                pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
+        bar.next()
+        pyautogui.sleep(.2)
+        pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
+        # temp = findWordWithPicrure(ok_cancel_toolbar, "OK", 'eng')
+        # pyautogui.leftClick(temp)#centerWordSearch("OK", 'eng', False))
+        # pyautogui.sleep(.2)
+        # if pyautogui.locateCenterOnScreen(error_wind) != None:
+        #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+        #     pyautogui.sleep(.2)
+        # pyautogui.leftClick(neerestFigure(text_field, "Номер"))
+        # pyautogui.sleep(.2)
+        deal_count_cords = neerestWord("Номер", "(название)", 'rus')
+        deal_count_cords[1] += 20
+        pyautogui.doubleClick(deal_count_cords)
+        pyautogui.keyDown('ctrl')
+        pyautogui.keyDown('a')
+        pyautogui.keyDown('backspace')
+        pyautogui.keyUp('backspace')
+        pyautogui.keyUp('a')
+        pyautogui.keyUp('ctrl')
+        pyautogui.write(datetime.datetime.now().strftime('%H:%M:%S.%f')) #2023-03-07|2023-03-0714:04:06.055323
+        pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+        bar.next()
+        pyautogui.sleep(1)
+        if pyautogui.locateCenterOnScreen(use_config_wind) != None:
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
             pyautogui.sleep(.2)
-            pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
-            # temp = findWordWithPicrure(ok_cancel_toolbar, "OK", 'eng')
-            # pyautogui.leftClick(temp)#centerWordSearch("OK", 'eng', False))
-            # pyautogui.sleep(.2)
-            # if pyautogui.locateCenterOnScreen(error_wind) != None:
-            #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            #     pyautogui.sleep(.2)
-            # pyautogui.leftClick(neerestFigure(text_field, "Номер"))
-            # pyautogui.sleep(.2)
-            deal_count_cords = neerestWord("Номер", "(название)", 'rus')
-            deal_count_cords[1] += 20
-            pyautogui.doubleClick(deal_count_cords)
-            pyautogui.keyDown('ctrl')
-            pyautogui.keyDown('a')
-            pyautogui.keyDown('backspace')
-            pyautogui.keyUp('backspace')
-            pyautogui.keyUp('a')
-            pyautogui.keyUp('ctrl')
-            pyautogui.write(datetime.datetime.now().strftime('%H:%M:%S.%f')) #2023-03-07|2023-03-0714:04:06.055323
-            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            bar.next()
+        if pyautogui.locateCenterOnScreen(error_wind_color) != None:
+            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
             pyautogui.sleep(1)
-            if pyautogui.locateCenterOnScreen(use_config_wind) != None:
-                pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
+            Column_Coords[0] = pyautogui.locateOnScreen(window_color_1)['left']
+            Column_Coords[1] = pyautogui.locateOnScreen(window_color_1)['top']
+            #print("Отладочка:")
+            color_cord = centerWordSearch("Белый", 'rus', False, window_color_1)
+            pyautogui.sleep(.2)
+            #print(color_cord)
+            if color_cord == [0, -7]:
+                Column_Coords[0] = pyautogui.locateOnScreen(window_color_2)['left']
+                Column_Coords[1] = pyautogui.locateOnScreen(window_color_2)['top']
+                color_cord = centerWordSearch("Графит", 'rus', False, window_color_2)
                 pyautogui.sleep(.2)
+            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+            pyautogui.sleep(1)
             if pyautogui.locateCenterOnScreen(error_wind_color) != None:
-                pyautogui.leftClick(centerWordSearch("OK", 'eng', False))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
-                pyautogui.sleep(1)
-                Column_Coords[0] = pyautogui.locateOnScreen(window_color_1)['left']
-                Column_Coords[1] = pyautogui.locateOnScreen(window_color_1)['top']
-                #print("Отладочка:")
-                color_cord = centerWordSearch("Белый", 'rus', False, window_color_1)
+                pyautogui.leftClick(color_cord)
                 pyautogui.sleep(.2)
-                #print(color_cord)
-                if color_cord == [0, -7]:
-                    Column_Coords[0] = pyautogui.locateOnScreen(window_color_2)['left']
-                    Column_Coords[1] = pyautogui.locateOnScreen(window_color_2)['top']
-                    color_cord = centerWordSearch("Графит", 'rus', False, window_color_2)
-                    pyautogui.sleep(.2)
-                pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-                pyautogui.sleep(1)
-                if pyautogui.locateCenterOnScreen(error_wind_color) != None:
-                    pyautogui.leftClick(color_cord)
-                    pyautogui.sleep(.2)
-                    Column_Coords[0] = pyautogui.locateOnScreen(window_color_3)['left']
-                    Column_Coords[1] = pyautogui.locateOnScreen(window_color_3)['top']
-                    color_cord = centerWordSearch("Мателюкс", 'rus', True, window_color_3)
-                    pyautogui.leftClick(color_cord)
-                    pyautogui.sleep(.2)
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
-            bar.next()
-            pyautogui.sleep(.5)
-            # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            # pyautogui.sleep(.2)
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(one_c_button))
-            bar.next()
-            pyautogui.sleep(1)
-            bar.next()
-            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            pyautogui.sleep(.2)
-            bar.next()
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-            pyautogui.sleep(.2)
-            # pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-            # pyautogui.sleep(.2)
-            out_tab["Статус"][index_value] = "Succes"
-            out_tab["Ссылка на json"][index_value] = pyperclip.paste()
-            bar.next()
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-            pyautogui.sleep(2)
-            bar.finish()
-        except Exception:
-            e = sys.exc_info()[1]
-            out_tab["Статус"][index_value] = e.args[0]
+                Column_Coords[0] = pyautogui.locateOnScreen(window_color_3)['left']
+                Column_Coords[1] = pyautogui.locateOnScreen(window_color_3)['top']
+                color_cord = centerWordSearch("Мателюкс", 'rus', True, window_color_3)
+                pyautogui.leftClick(color_cord)
+                pyautogui.sleep(.2)
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
+        bar.next()
+        pyautogui.sleep(.5)
+        # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+        # pyautogui.sleep(.2)
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(one_c_button))
+        bar.next()
+        pyautogui.sleep(1)
+        bar.next()
+        pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+        pyautogui.sleep(.2)
+        bar.next()
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+        pyautogui.sleep(.2)
+        # pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+        # pyautogui.sleep(.2)
+        out_tab["Статус"][index_value] = "Succes"
+        out_tab["Ссылка на json"][index_value] = pyperclip.paste()
+        bar.next()
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
+        pyautogui.sleep(2)
+        bar.finish()
+        # except Exception:
+        #     e = sys.exc_info()[1]
+        #     out_tab["Статус"][index_value] = e.args[0]
         # create excel writer
         writer = pd.ExcelWriter(r'..\logs.xlsx')
         # write dataframe to excel sheet named 'marks'
