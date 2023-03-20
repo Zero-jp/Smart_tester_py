@@ -268,7 +268,7 @@ for index, row in data.iterrows():
             pyautogui.sleep(.1)
             pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
             # print("ОТЛАДКА!!!!")
-            deal_count_cords = neerestWord("Номер", "(название)", 'rus')
+            deal_count_cords = centerWordSearch("Номер", 'rus', False)
             deal_count_cords[1] += 20
             pyautogui.doubleClick(deal_count_cords)
             pyautogui.keyDown('ctrl')
