@@ -20,7 +20,6 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
-Temp_Data = [0, 0]
 # Window_Coords = [0, 0, 0, 0]
 
 # def leftClick(coord):
@@ -204,7 +203,7 @@ start_name_project = r'..\images\start_name_project.jpg'
 # print(data.columns[0])
 colum_name = []
 columns_count = data.shape[1]
-global Temp_Data
+Temp_Data = [0, 0]
 #print(data.shape[0])
 rows_count = data.shape[0]
 for index in range(columns_count):
