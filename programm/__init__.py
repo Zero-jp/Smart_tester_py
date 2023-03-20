@@ -72,7 +72,7 @@ def lookOnScreen(lang: str, is_obrez: bool):
     else:
         data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12',
                                          output_type=pytesseract.Output.DICT)
-    print(data)
+    # print(data)
 
     return data
 
@@ -129,7 +129,7 @@ def neerestFigure(link: str, coords: list):
     return imageCoords
 
 def neerestWord(word_main: str, word_sub: str, lang: str):
-    print(word_main)
+    # print(word_main)
     data = lookOnScreen(lang, False)
     main_coords = []
     sub_coords = []
@@ -267,7 +267,7 @@ for index, row in data.iterrows():
             pyautogui.press('down')
             pyautogui.sleep(.1)
             pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
-            print("ОТЛАДКА!!!!")
+            # print("ОТЛАДКА!!!!")
             deal_count_cords = neerestWord("Номер", "(название)", 'rus')
             deal_count_cords[1] += 20
             pyautogui.doubleClick(deal_count_cords)
