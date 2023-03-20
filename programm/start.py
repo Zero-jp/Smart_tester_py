@@ -271,7 +271,7 @@ for index, row in data.iterrows():
             # print("ОТЛАДКА!!!!")
             # global Temp_Data
 
-            deal_count_cords = centerWordSearch(str(index_value-1), 'rus', False)
+            deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
             pyautogui.doubleClick(deal_count_cords)
             pyautogui.keyDown('ctrl')
             pyautogui.keyDown('a')
@@ -279,7 +279,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('backspace')
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
-            pyautogui.write(str(index_value)) #2023-03-07|2023-03-0714:04:06.055323
+            pyautogui.write(str(index_value+1)) #2023-03-07|2023-03-0714:04:06.055323
             pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             bar.next()
             pyautogui.sleep(1)
