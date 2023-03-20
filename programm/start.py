@@ -20,7 +20,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
-Temp_Data = "123"
+Temp_Data = [0, 0]
 # Window_Coords = [0, 0, 0, 0]
 
 # def leftClick(coord):
@@ -198,11 +198,13 @@ window_color_1 = r'..\images\window_color_1.bmp'
 window_color_2 = r'..\images\window_color_2.bmp'
 window_color_3 = r'..\images\window_color_3.bmp'
 error_logo = r'..\images\error_logo.bmp'
+start_name_project = r'..\images\start_name_project.jpg'
 # retriveSettingWindCord()
 
 # print(data.columns[0])
 colum_name = []
 columns_count = data.shape[1]
+global Temp_Data
 #print(data.shape[0])
 rows_count = data.shape[0]
 for index in range(columns_count):
@@ -271,8 +273,10 @@ for index, row in data.iterrows():
             # print("ОТЛАДКА!!!!")
             # global Temp_Data
 
-            deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
-            pyautogui.doubleClick(deal_count_cords)
+            # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
+            if index_value == 1:
+                Temp_Data = pyautogui.locateCenterOnScreen(start_name_project)
+            pyautogui.doubleClick(Temp_Data)
             pyautogui.keyDown('ctrl')
             pyautogui.keyDown('a')
             pyautogui.keyDown('backspace')
@@ -315,7 +319,7 @@ for index, row in data.iterrows():
             pyautogui.sleep(.5)
             # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             # pyautogui.sleep(.2)
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(one_c_button))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(start_name_project))
             bar.next()
             pyautogui.sleep(1)
             bar.next()
