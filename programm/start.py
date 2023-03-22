@@ -272,6 +272,7 @@ for index, row in data.iterrows():
             # print("ОТЛАДКА!!!!")
             # global Temp_Data
 
+            pyautogui.sleep(.4)
             # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
             if index_value == 1:
                 Temp_Data = pyautogui.locateCenterOnScreen(start_name_project)
@@ -318,7 +319,7 @@ for index, row in data.iterrows():
             pyautogui.sleep(.5)
             # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             # pyautogui.sleep(.2)
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(start_name_project))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(one_c_button))
             bar.next()
             pyautogui.sleep(1)
             bar.next()
