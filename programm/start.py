@@ -287,9 +287,9 @@ for index, row in data.iterrows():
             pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             bar.next()
             pyautogui.sleep(1)
-            if pyautogui.locateCenterOnScreen(use_config_wind) != None:
-                pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
-                pyautogui.sleep(.2)
+            # if pyautogui.locateCenterOnScreen(use_config_wind) != None:
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
+            pyautogui.sleep(.2)
             # if pyautogui.locateCenterOnScreen(error_wind_color) != None:
             #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
             #     pyautogui.sleep(1)
