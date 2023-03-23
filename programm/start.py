@@ -72,7 +72,7 @@ def lookOnScreen(lang: str, is_obrez: bool):
     else:
         data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12',
                                          output_type=pytesseract.Output.DICT)
-    # print(data)
+    print(data)
 
     return data
 
