@@ -321,7 +321,7 @@ for index, row in data.iterrows():
             # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             # pyautogui.sleep(.2)
             one_c = pyautogui.locateOnScreen(one_c_button)
-            pyautogui.leftClick(one_c['right'], one_c['down'])
+            pyautogui.leftClick(one_c['width']*6.5, one_c['top']+one_c['height']/2)
             bar.next()
             pyautogui.sleep(1)
             bar.next()
