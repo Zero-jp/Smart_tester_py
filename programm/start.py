@@ -20,6 +20,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
+One_C_Coords = [280, 70]
 # Window_Coords = [0, 0, 0, 0]
 
 # def leftClick(coord):
@@ -283,7 +284,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('backspace')
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
-            pyautogui.write(str(index_value+1)) #2023-03-07|2023-03-0714:04:06.055323
+            pyautogui.write(str(index_value)) #2023-03-07|2023-03-0714:04:06.055323
             pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             bar.next()
             pyautogui.sleep(1)
@@ -321,9 +322,9 @@ for index, row in data.iterrows():
             # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             # pyautogui.sleep(.2)
             one_c = pyautogui.locateOnScreen(one_c_button)
-            pyautogui.leftClick(one_c['width']*6.5, one_c['top']+one_c['height']/2)
+            pyautogui.leftClick(One_C_Coords)#one_c)#['width']*6.5, one_c['top']+one_c['height']/2)
             bar.next()
-            pyautogui.sleep(1)
+            pyautogui.sleep(2)
             bar.next()
             pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             pyautogui.sleep(.2)
