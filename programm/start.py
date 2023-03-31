@@ -286,7 +286,7 @@ for index, row in data.iterrows():
             pyautogui.sleep(.4)
             # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
             if index == 1:
-                Temp_Data = centerWordSearch("NumberOfSave", 'eng', False)
+                Temp_Data = centerWordSearch("H", 'eng', False)
             pyautogui.doubleClick(Temp_Data)
             pyautogui.keyDown('ctrl')
             pyautogui.keyDown('a')
