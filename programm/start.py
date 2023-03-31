@@ -338,7 +338,7 @@ for index, row in data.iterrows():
             out_tab["Ссылка на json"][index_value] = pyperclip.paste()
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-            pyautogui.sleep(2)
+            pyautogui.sleep(3.5)
             bar.finish()
         except Exception:
             e = sys.exc_info()[1]
