@@ -361,7 +361,6 @@ for index, row in data.iterrows():
             print("Спец ошибка")
             print(centerWordSearch("Спецификация", 'rus', False))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
         # if centerWordSearch("ФИО", 'rus', False) != [0,0]:
         #     print("Имя ошибка")
         #     pyautogui.leftClick(pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus')))
@@ -369,8 +368,8 @@ for index, row in data.iterrows():
             print("Буф ошибка")
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-        pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
+        pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
+        # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         e = sys.exc_info()[1]
         out_tab["Статус"][index] = e.args[0]
 
