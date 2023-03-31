@@ -25,11 +25,7 @@ One_C_Coords = [280, 70]
 # Window_Coords = [0, 0, 0, 0]
 
 # def onHotKeyPress(key):
-    # Collect events until released
-    # with keyboard.Listener(
-    #         on_press=on_press,
-    #         on_release=on_release) as listener:
-    #     listener.join()
+#     raise SystemExit(1)
 
 # def leftClick(coord):
 #     # клик
@@ -223,11 +219,15 @@ out_tab["Ссылка на json"] = ["Отсутсвует"]*rows_count
 # print(colum_name[0][1])
 #pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
 
+# with keyboard.Listener(
+#         on_press=on_press,
+#         on_release=on_release) as listener:
+#     listener.join()
 mylist = [1, 2, 3, 4, 5, 6, 7]
 
 for index, row in data.iterrows():
     try:
-        pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
+        # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
         # try:
         # Нахождение названия свойства и элемента со списком
@@ -370,7 +370,7 @@ for index, row in data.iterrows():
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-
+        pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         e = sys.exc_info()[1]
         out_tab["Статус"][index] = e.args[0]
 
