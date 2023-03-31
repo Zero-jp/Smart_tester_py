@@ -224,30 +224,32 @@ out_tab["Ссылка на json"] = ["Отсутсвует"]*rows_count
 #pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
 
 mylist = [1, 2, 3, 4, 5, 6, 7]
+
 for index, row in data.iterrows():
-    bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
-    # try:
-    # Нахождение названия свойства и элемента со списком
-    # print(row[0] + '|' + row[1])
-    first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
-    pyautogui.leftClick(neerestFigure(frame, first_name))
-    pyautogui.sleep(.2)
-    # listWordSearch()
-    # print(row[0])
-    # print(detect(row[0]))
-    if detect(row[0]) == 'ru':
-        pyautogui.leftClick(centerWordSearch(row[0], 'rus', True))
-    # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-    else:
-        pyautogui.leftClick(centerWordSearch(row[0], 'eng', True))
-    pyautogui.sleep(.2)
-    #print(colum_name[1][0] + '|' + colum_name[1][1])
-    second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
-    pyautogui.leftClick(neerestFigure(frame, second_name))
-    #print("ОТЛАДКА!!!!")
-    # Нахождение нужного значения
-    for index_value in range(columns_count-1):
-        try:
+    try:
+        pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
+        bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
+        # try:
+        # Нахождение названия свойства и элемента со списком
+        # print(row[0] + '|' + row[1])
+        first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
+        pyautogui.leftClick(neerestFigure(frame, first_name))
+        pyautogui.sleep(.2)
+        # listWordSearch()
+        # print(row[0])
+        # print(detect(row[0]))
+        if detect(row[0]) == 'ru':
+            pyautogui.leftClick(centerWordSearch(row[0], 'rus', True))
+        # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+        else:
+            pyautogui.leftClick(centerWordSearch(row[0], 'eng', True))
+        pyautogui.sleep(.2)
+        #print(colum_name[1][0] + '|' + colum_name[1][1])
+        second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
+        pyautogui.leftClick(neerestFigure(frame, second_name))
+        #print("ОТЛАДКА!!!!")
+        # Нахождение нужного значения
+        for index_value in range(columns_count-1):
             index_value += 1
             #print(row[index_value] + detect(row[index_value]))
             if len(row[index_value].split(" ")) == 1:
@@ -342,21 +344,25 @@ for index, row in data.iterrows():
             pyautogui.sleep(.2)
             # pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             # pyautogui.sleep(.2)
-            out_tab["Статус"][index_value] = "Succes"
-            out_tab["Ссылка на json"][index_value] = pyperclip.paste()
+            out_tab["Статус"][index] = "Succes"
+            out_tab["Ссылка на json"][index] = pyperclip.paste()
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
             pyautogui.sleep(3.5)
             bar.finish()
-        except Exception:
-            e = sys.exc_info()[1]
-            out_tab["Статус"][index_value] = e.args[0]
         # create excel writer
         writer = pd.ExcelWriter(r'..\logs.xlsx')
         # write dataframe to excel sheet named 'marks'
         out_tab.to_excel(writer, 'marks')
         # save the excel file
         writer.save()
+    except Exception:
+        if centerWordSearch("Спецификация", 'rus', False) == [0,0]:
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
+
+        e = sys.exc_info()[1]
+        out_tab["Статус"][index] = e.args[0]
 
     # pyautogui.sleep(.2)
     # print(row[1] + detect(row[1]))
