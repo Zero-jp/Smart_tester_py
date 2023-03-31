@@ -357,7 +357,17 @@ for index, row in data.iterrows():
         # save the excel file
         writer.save()
     except Exception:
-        if centerWordSearch("Спецификация", 'rus', False) == [0,0]:
+        if centerWordSearch("Спецификация", 'rus', False) != [0,-7]:
+            print("Спец ошибка")
+            print(centerWordSearch("Спецификация", 'rus', False))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
+        # if centerWordSearch("ФИО", 'rus', False) != [0,0]:
+        #     print("Имя ошибка")
+        #     pyautogui.leftClick(pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus')))
+        if centerWordSearch("Буфер", 'rus', False) != [0,-7]:
+            print("Буф ошибка")
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
 
