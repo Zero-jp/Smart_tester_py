@@ -14,6 +14,7 @@ import sys
 import pathlib
 from pathlib import Path
 from progress.bar import IncrementalBar
+# from pynput import keyboard
 
 pyautogui.FAILSAFE = False
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -22,6 +23,13 @@ user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
 One_C_Coords = [280, 70]
 # Window_Coords = [0, 0, 0, 0]
+
+# def onHotKeyPress(key):
+    # Collect events until released
+    # with keyboard.Listener(
+    #         on_press=on_press,
+    #         on_release=on_release) as listener:
+    #     listener.join()
 
 # def leftClick(coord):
 #     # клик
@@ -275,7 +283,7 @@ for index, row in data.iterrows():
 
             pyautogui.sleep(.4)
             # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
-            if index_value == 1:
+            if index == 1:
                 Temp_Data = centerWordSearch("NumberOfSave", 'eng', False)
             pyautogui.doubleClick(Temp_Data)
             pyautogui.keyDown('ctrl')
@@ -284,7 +292,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('backspace')
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
-            pyautogui.write(str(index_value)) #2023-03-07|2023-03-0714:04:06.055323
+            pyautogui.write(str(index)) #2023-03-07|2023-03-0714:04:06.055323
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) #centerWordSearch("OK", 'eng', False))
             bar.next()
             pyautogui.sleep(1)
