@@ -348,7 +348,7 @@ for index, row in data.iterrows():
             out_tab["Ссылка на json"][index] = pyperclip.paste()
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-            pyautogui.sleep(3.5)
+            pyautogui.sleep(5)
             bar.finish()
         # create excel writer
         writer = pd.ExcelWriter(r'..\logs.xlsx')
