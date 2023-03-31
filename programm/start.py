@@ -295,7 +295,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
             pyautogui.write(str(index)) #2023-03-07|2023-03-0714:04:06.055323
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) #centerWordSearch("OK", 'eng', False))
+            pyautogui.leftClick(centerWordSearch("OK", 'eng', False)) # pyautogui.locateCenterOnScreen(active_ok_button)
             bar.next()
             pyautogui.sleep(1)
             # if pyautogui.locateCenterOnScreen(use_config_wind) != None:
