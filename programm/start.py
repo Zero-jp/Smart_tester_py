@@ -69,9 +69,9 @@ def lookOnScreen(lang: str, is_obrez: bool):
         l = link
     # print(Window_Coords)
     if lang != 'eng':
-        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12', output_type=pytesseract.Output.DICT)
+        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
     else:
-        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12',
+        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words',
                                          output_type=pytesseract.Output.DICT)
     print(data)
 
@@ -285,7 +285,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
             pyautogui.write(str(index_value)) #2023-03-07|2023-03-0714:04:06.055323
-            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) #centerWordSearch("OK", 'eng', False))
             bar.next()
             pyautogui.sleep(1)
             # if pyautogui.locateCenterOnScreen(use_config_wind) != None:
@@ -321,12 +321,13 @@ for index, row in data.iterrows():
             pyautogui.sleep(.5)
             # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
             # pyautogui.sleep(.2)
+            # темпл мэтчинг
             one_c = pyautogui.locateOnScreen(one_c_button)
             pyautogui.leftClick(One_C_Coords)#one_c)#['width']*6.5, one_c['top']+one_c['height']/2)
             bar.next()
             pyautogui.sleep(2)
             bar.next()
-            pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) #centerWordSearch("OK", 'eng', False))
             pyautogui.sleep(.2)
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
