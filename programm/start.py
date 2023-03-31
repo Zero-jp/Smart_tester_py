@@ -285,7 +285,7 @@ for index, row in data.iterrows():
 
             pyautogui.sleep(.4)
             # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
-            if index == 1:
+            if index == 0:
                 Temp_Data = centerWordSearch("ELMA", 'eng', False)
             pyautogui.doubleClick(Temp_Data)
             pyautogui.keyDown('ctrl')
@@ -295,7 +295,7 @@ for index, row in data.iterrows():
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
             pyautogui.write(str(index)) #2023-03-07|2023-03-0714:04:06.055323
-            pyautogui.leftClick(centerWordSearch("OK", 'eng', False)) # pyautogui.locateCenterOnScreen(active_ok_button)
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) # centerWordSearch("OK", 'eng', False)
             bar.next()
             pyautogui.sleep(1)
             # if pyautogui.locateCenterOnScreen(use_config_wind) != None:
