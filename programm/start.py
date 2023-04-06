@@ -35,7 +35,7 @@ def on_press(key):
 
 def on_release(key):
     if any([key in z for z in cmb]):
-        current.remove(key)
+        raise SystemExit(1)
 
 
 
