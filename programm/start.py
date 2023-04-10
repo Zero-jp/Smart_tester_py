@@ -438,7 +438,8 @@ def startTesting(index, row):
 #             startTesting(index, row)
 #             time.sleep(2)
 
-def primaryPause():
+def primaryPause(pb):
+    pb.stop()
     global running
     if running == True:
         running = False
@@ -451,7 +452,8 @@ def primaryPause():
     #labelStatusName.configure(text="процесс поставлен на паузу(для продолжения нажмите ESC)")
     #keyboard.wait("esc")
 
-def primaryExit():
+def primaryExit(pb):
+    pb.stop()
     global exit
     if exit == True:
         exit = False
@@ -466,16 +468,19 @@ def window():
     # lbl.grid(column=0, row=0)
     labelStatus = Label(window, text="Статус:")
     labelStatus.grid(column=0, row=0)
-    pb = ttk.Progressbar(window, orient="horizontal", length=150, maximum = rows_count)
+    pb = ttk.Progressbar(window, orient="horizontal", length=150, mode="indeterminate")
     pb.grid(column=1, row=0)
-    labelStatus = Label(window, text=rows_count)
-    labelStatus.grid(column=2, row=0)
+    pb.start()
+    labelTotalCount = Label(window, text="Всего тест-кейсов:")
+    labelTotalCount.grid(column=2, row=0)
+    labelCount = Label(window, text=rows_count)
+    labelCount.grid(column=3, row=0)
     # btnStart = Button(window, text="Старт", bg="#29f716", activebackground="#82f078", command=lambda:  primaryStart(window))
     # btnStart.grid(column=0, row=1)
     # print("test!!!!!!!!!11")
-    btnPause = Button(window, text="Пауза", bg="#2279f2", activebackground="#78aaf0", command=lambda: primaryPause())
+    btnPause = Button(window, text="Пауза", bg="#2279f2", activebackground="#78aaf0", command=lambda: primaryPause(pb))
     btnPause.grid(column=0, row=1)
-    btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit())
+    btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit(pb))
     btnStop.grid(column=1, row=1)
     window.mainloop()
 
