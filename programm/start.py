@@ -242,21 +242,46 @@ for index in range(columns_count):
     colum_name.append(data.columns[index].split(' '))
 out_tab["Статус"] = ["False"] * rows_count
 out_tab["Ссылка на json"] = ["Отсутсвует"] * rows_count
-# print(colum_name[0][0])
-# print(colum_name[0][1])
-# pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
-
-# with keyboard.Listener(
-#         on_press=on_press,
-#         on_release=on_release) as listener:
-#     listener.join()
-mylist = [1, 2, 3, 4, 5, 6, 7]
+print(colum_name[0][0])
+print(colum_name[0][1])
+print(colum_name[1][0])
+print(colum_name[1][1])
 
 running = False
 
 exit = False
 
 def startTesting(index, row):
+    global data
+    global out_tab
+    global frame
+    global full_frame
+    global ok_button
+    global error_wind
+    global active_ok_button
+    global active_ok_button_error
+    global text_field
+    global use_config_wind
+    global active_yes_button
+    global show_spec_button
+    global one_c_button
+    global exit_button
+    global config_set_button
+    global ok_cancel_toolbar
+    global error_wind_color
+    global window_color_1
+    global window_color_2
+    global window_color_3
+    global error_logo
+    global start_name_project
+    # retriveSettingWindCord()
+
+    # print(data.columns[0])
+    global colum_name
+    global columns_count
+    global Temp_Data
+    global rows_count
+    mylist = [1, 2, 3, 4, 5, 6, 7]
     try:
         # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
@@ -275,19 +300,16 @@ def startTesting(index, row):
         else:
             pyautogui.leftClick(centerWordSearch(row[0], 'eng', True))
         pyautogui.sleep(.2)
-        #print(colum_name[1][0] + '|' + colum_name[1][1])
+        # print(colum_name[1][0] + '|' + colum_name[1][1])
         second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
         pyautogui.leftClick(neerestFigure(frame, second_name))
-        #print("ОТЛАДКА!!!!")
         # Нахождение нужного значения
         for index_value in range(columns_count-1):
             index_value += 1
-            #print(row[index_value] + detect(row[index_value]))
             if len(row[index_value].split(" ")) == 1:
                 if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
                         or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
                     pyautogui.leftClick(centerWordSearch(row[index_value], 'rus', True))
-                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
                 else:
                     pyautogui.leftClick(centerWordSearch(row[index_value], 'eng', True))
             elif len(row[index_value].split(" ")) == 2:
@@ -295,7 +317,6 @@ def startTesting(index, row):
                 if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
                         or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
                     pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
-                # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
                 else:
                     pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
             bar.next()
@@ -311,11 +332,7 @@ def startTesting(index, row):
             pyautogui.press('down')
             pyautogui.sleep(.1)
             pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
-            # print("ОТЛАДКА!!!!")
-            # global Temp_Data
-
             pyautogui.sleep(.4)
-            # deal_count_cords = centerWordSearch(str(index_value), 'rus', False)
             if index == 0:
                 Temp_Data = centerWordSearch("ELMA", 'eng', False)
             pyautogui.doubleClick(Temp_Data)
@@ -333,48 +350,19 @@ def startTesting(index, row):
             # pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
             pyautogui.press('enter')
             pyautogui.sleep(.2)
-            # if pyautogui.locateCenterOnScreen(error_wind_color) != None:
-            #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
-            #     pyautogui.sleep(1)
-            #     Column_Coords[0] = pyautogui.locateOnScreen(window_color_1)['left']
-            #     Column_Coords[1] = pyautogui.locateOnScreen(window_color_1)['top']
-            #     #print("Отладочка:")
-            #     color_cord = centerWordSearch("Белый", 'rus', False, window_color_1)
-            #     pyautogui.sleep(.2)
-            #     #print(color_cord)
-            #     if color_cord == [0, -7]:
-            #         Column_Coords[0] = pyautogui.locateOnScreen(window_color_2)['left']
-            #         Column_Coords[1] = pyautogui.locateOnScreen(window_color_2)['top']
-            #         color_cord = centerWordSearch("Графит", 'rus', False, window_color_2)
-            #         pyautogui.sleep(.2)
-            #     pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            #     pyautogui.sleep(1)
-            #     if pyautogui.locateCenterOnScreen(error_wind_color) != None:
-            #         pyautogui.leftClick(color_cord)
-            #         pyautogui.sleep(.2)
-            #         Column_Coords[0] = pyautogui.locateOnScreen(window_color_3)['left']
-            #         Column_Coords[1] = pyautogui.locateOnScreen(window_color_3)['top']
-            #         color_cord = centerWordSearch("Мателюкс", 'rus', True, window_color_3)
-            #         pyautogui.leftClick(color_cord)
-            #         pyautogui.sleep(.2)
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
             bar.next()
             pyautogui.sleep(.5)
-            # pyautogui.leftClick(centerWordSearch("OK", 'eng', False))
-            # pyautogui.sleep(.2)
-            # темпл мэтчинг
             one_c = pyautogui.locateOnScreen(one_c_button)
-            pyautogui.leftClick(One_C_Coords)#one_c)#['width']*6.5, one_c['top']+one_c['height']/2)
+            pyautogui.leftClick(One_C_Coords)
             bar.next()
             pyautogui.sleep(2)
             bar.next()
-            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button)) #centerWordSearch("OK", 'eng', False))
+            pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.sleep(.2)
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.sleep(.2)
-            # pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-            # pyautogui.sleep(.2)
             out_tab["Статус"][index] = "Succes"
             out_tab["Ссылка на json"][index] = pyperclip.paste()
             bar.next()
@@ -494,4 +482,5 @@ for index, row in data.iterrows():
         startTesting(index, row)
         time.sleep(0.2)
     if exit == True:
+        t.join()
         sys.exit(1)
