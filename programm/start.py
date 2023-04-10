@@ -252,7 +252,7 @@ out_tab["Ссылка на json"] = ["Отсутсвует"] * rows_count
 #     listener.join()
 mylist = [1, 2, 3, 4, 5, 6, 7]
 
-running = True
+running = False
 
 exit = False
 
@@ -425,25 +425,21 @@ def startTesting(index, row):
         # pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
     # print(str(coords[0]) + ', ' + str(coords[1]))
 
-# def primaryStart(window: Tk):
-#     # labelStatusName = Label(window, text="процесс запущен")
-#     # labelStatusName.grid(column=1, row=0)
-#     # btnStart.configure(state=["disabled"])
-#     for index, row in data.iterrows():
-#         if running == False:
-#             while running == False:
-#                 # ожидаем повторного нажатия кнопочки
-#                 time.sleep(2)
-#         else:
-#             startTesting(index, row)
-#             time.sleep(2)
+def primaryStart(pb):
+    # labelStatusName = Label(window, text="процесс запущен")
+    # labelStatusName.grid(column=1, row=0)
+    # btnStart.configure(state=["disabled"])
+    pb.start()
+    global running
+    running = True
 
 def primaryPause(pb):
-    pb.stop()
     global running
     if running == True:
+        pb.stop()
         running = False
     else:
+        pb.start()
         running = True
     # if btnPause["state"] == ["disabled"]:
     #     btnPause["state"] = ["enable"]
@@ -470,18 +466,17 @@ def window():
     labelStatus.grid(column=0, row=0)
     pb = ttk.Progressbar(window, orient="horizontal", length=150, mode="indeterminate")
     pb.grid(column=1, row=0)
-    pb.start()
     labelTotalCount = Label(window, text="Всего тест-кейсов:")
     labelTotalCount.grid(column=2, row=0)
     labelCount = Label(window, text=rows_count)
     labelCount.grid(column=3, row=0)
-    # btnStart = Button(window, text="Старт", bg="#29f716", activebackground="#82f078", command=lambda:  primaryStart(window))
-    # btnStart.grid(column=0, row=1)
+    btnStart = Button(window, text="Старт", bg="#29f716", activebackground="#82f078", command=lambda:  primaryStart(pb))
+    btnStart.grid(column=0, row=1)
     # print("test!!!!!!!!!11")
     btnPause = Button(window, text="Пауза", bg="#2279f2", activebackground="#78aaf0", command=lambda: primaryPause(pb))
-    btnPause.grid(column=0, row=1)
+    btnPause.grid(column=1, row=1)
     btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit(pb))
-    btnStop.grid(column=1, row=1)
+    btnStop.grid(column=2, row=1)
     window.mainloop()
 
 t = Thread(target=window)
