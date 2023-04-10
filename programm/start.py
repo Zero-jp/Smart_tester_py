@@ -16,6 +16,9 @@ from pathlib import Path
 from progress.bar import IncrementalBar
 # from pynput import keyboard
 from pynput import keyboard
+from tkinter import *
+from tkinter import ttk
+from threading import Thread
 
 cmb = [{keyboard.Key.esc}]
 
@@ -101,7 +104,7 @@ def lookOnScreen(lang: str, is_obrez: bool):
     else:
         data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words',
                                          output_type=pytesseract.Output.DICT)
-    print(data)
+    # print(data)
 
     return data
 
@@ -230,20 +233,18 @@ start_name_project = r'..\images\start_name_project.jpg'
 # retriveSettingWindCord()
 
 # print(data.columns[0])
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
 colum_name = []
 columns_count = data.shape[1]
 Temp_Data = [0, 0]
-#print(data.shape[0])
+# print(data.shape[0])
 rows_count = data.shape[0]
 for index in range(columns_count):
     colum_name.append(data.columns[index].split(' '))
-out_tab["Статус"] = ["False"]*rows_count
-out_tab["Ссылка на json"] = ["Отсутсвует"]*rows_count
+out_tab["Статус"] = ["False"] * rows_count
+out_tab["Ссылка на json"] = ["Отсутсвует"] * rows_count
 # print(colum_name[0][0])
 # print(colum_name[0][1])
-#pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
+# pyautogui.leftClick(neerestWord(colum_name[0][0], colum_name[0][1]))
 
 # with keyboard.Listener(
 #         on_press=on_press,
@@ -251,7 +252,11 @@ out_tab["Ссылка на json"] = ["Отсутсвует"]*rows_count
 #     listener.join()
 mylist = [1, 2, 3, 4, 5, 6, 7]
 
-for index, row in data.iterrows():
+running = True
+
+exit = False
+
+def startTesting(index, row):
     try:
         # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
@@ -399,23 +404,94 @@ for index, row in data.iterrows():
         e = sys.exc_info()[1]
         out_tab["Статус"][index] = e.args[0]
 
-    # pyautogui.sleep(.2)
-    # print(row[1] + detect(row[1]))
-    # if len(row[1].split(" ")) == 1:
-    #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-    #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-    #         pyautogui.leftClick(centerWordSearch(row[1], 'rus'))
-    #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-    #     else:
-    #         pyautogui.leftClick(centerWordSearch(row[1], 'eng'))
-    # elif len(row[1].split(" ")) == 2:
-    #     words = row[1].split(" ")
-    #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-    #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-    #         pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
-    #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-    #     else:
-    #         pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
-    # pyautogui.sleep(.2)
-    # pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
-# print(str(coords[0]) + ', ' + str(coords[1]))
+        # pyautogui.sleep(.2)
+        # print(row[1] + detect(row[1]))
+        # if len(row[1].split(" ")) == 1:
+        #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
+        #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
+        #         pyautogui.leftClick(centerWordSearch(row[1], 'rus'))
+        #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+        #     else:
+        #         pyautogui.leftClick(centerWordSearch(row[1], 'eng'))
+        # elif len(row[1].split(" ")) == 2:
+        #     words = row[1].split(" ")
+        #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
+        #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
+        #         pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
+        #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
+        #     else:
+        #         pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
+        # pyautogui.sleep(.2)
+        # pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
+    # print(str(coords[0]) + ', ' + str(coords[1]))
+
+# def primaryStart(window: Tk):
+#     # labelStatusName = Label(window, text="процесс запущен")
+#     # labelStatusName.grid(column=1, row=0)
+#     # btnStart.configure(state=["disabled"])
+#     for index, row in data.iterrows():
+#         if running == False:
+#             while running == False:
+#                 # ожидаем повторного нажатия кнопочки
+#                 time.sleep(2)
+#         else:
+#             startTesting(index, row)
+#             time.sleep(2)
+
+def primaryPause():
+    global running
+    if running == True:
+        running = False
+    else:
+        running = True
+    # if btnPause["state"] == ["disabled"]:
+    #     btnPause["state"] = ["enable"]
+    # else:
+    #     btnPause["state"] = ["disabled"]
+    #labelStatusName.configure(text="процесс поставлен на паузу(для продолжения нажмите ESC)")
+    #keyboard.wait("esc")
+
+def primaryExit():
+    global exit
+    if exit == True:
+        exit = False
+    else:
+        exit = True
+
+def window():
+    window = Tk()
+    window.title("Бот-тестировщик")
+    window.geometry('400x250')
+    # lbl = Label(window, text="Привет")
+    # lbl.grid(column=0, row=0)
+    labelStatus = Label(window, text="Статус:")
+    labelStatus.grid(column=0, row=0)
+    pb = ttk.Progressbar(window, orient="horizontal", length=150, maximum = rows_count)
+    pb.grid(column=1, row=0)
+    labelStatus = Label(window, text=rows_count)
+    labelStatus.grid(column=2, row=0)
+    # btnStart = Button(window, text="Старт", bg="#29f716", activebackground="#82f078", command=lambda:  primaryStart(window))
+    # btnStart.grid(column=0, row=1)
+    # print("test!!!!!!!!!11")
+    btnPause = Button(window, text="Пауза", bg="#2279f2", activebackground="#78aaf0", command=lambda: primaryPause())
+    btnPause.grid(column=0, row=1)
+    btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit())
+    btnStop.grid(column=1, row=1)
+    window.mainloop()
+
+t = Thread(target=window)
+t.start()
+
+for index, row in data.iterrows():
+    if running == False:
+        while running == False:
+            # ожидаем повторного нажатия кнопочки
+            time.sleep(2)
+        print("Пройден тест-кейс "+str(index))
+        startTesting(index, row)
+    else:
+        print("Пройден тест-кейс "+str(index))
+        startTesting(index, row)
+        time.sleep(0.2)
+    if exit == True:
+        sys.exit(1)
