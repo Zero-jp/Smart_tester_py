@@ -7,7 +7,7 @@ import pytesseract # оптический анализатор(нейронка)
 import pandas as pd # считывание из таблицы входных данных
 import math
 import statistics
-from PIL import Image, ImageFilter
+from PIL import Image as PilImage, ImageFilter
 from langdetect import detect
 import pyperclip
 import sys
@@ -87,7 +87,7 @@ def lookOnScreen(lang: str, is_obrez: bool):
     l = ""
     if is_obrez:
         #print(Column_Coords)
-        temp_kraya = Image.open(link)
+        temp_kraya = PilImage.open(link)
         im_crop = temp_kraya.crop((Column_Coords[0], 0, Column_Coords[1], GetSystemMetrics(1)))
         im_crop.save(link_obrez)
         l = link_obrez
@@ -293,7 +293,7 @@ def startTesting(index, row):
         pyautogui.sleep(.2)
         # listWordSearch()
         # print(row[0])
-        # print(detect(row[0]))
+        print(detect(row[0]))
         if detect(row[0]) == 'ru':
             pyautogui.leftClick(centerWordSearch(row[0], 'rus', True))
         # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
