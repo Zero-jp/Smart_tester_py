@@ -61,60 +61,25 @@ One_C_Coords = [280, 70]
 #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, coord[0], coord[1])
 #     print("Click.")
 def lookOnScreen(lang: str, is_obrez: bool):
-    # поиск слова на экране
-    # 1018 294  1205 536
     temp_screen = pyautogui.screenshot(r'..\images\temp.bmp')
     img_seryy = temp_screen.convert("L")# .save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    # temp_kraya = img_seryy.filter(ImageFilter.FIND_EDGES)#.save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
     img_seryy.filter(ImageFilter.DETAIL).save(r"..\images\temp_kraya.bmp")
-    # temp_kraya = img_seryy.filter(ImageFilter.FIND_EDGES).save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    # temp_kraya = img_seryy.filter(ImageFilter.SMOOTH)
-    # temp_kraya = temp_kraya.filter(ImageFilter.EMBOSS).save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    # temp_kraya = img_seryy.filter(ImageFilter.SHARPEN)
-    # temp_kraya = temp_kraya.filter(ImageFilter.EMBOSS).save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    # file_path = r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp'
-    # with Image.open(file_path) as img:
-    #     img.load()
-    #     for _ in range(3):
-    #         img = img.filter(ImageFilter.MaxFilter(3))
-    #     img.save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    # получить все данные из изображения
-    # temp_kraya = temp_kraya.filter(ImageFilter.MaxFilter(1)).save(
-    #    r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    #print(lang)
     link_obrez = r"..\images\temp_kraya_obrez.bmp"
     link = r"..\images\temp_kraya.bmp"
     l = ""
     if is_obrez:
-        #print(Column_Coords)
         temp_kraya = PilImage.open(link)
         im_crop = temp_kraya.crop((Column_Coords[0], 0, Column_Coords[1], GetSystemMetrics(1)))
         im_crop.save(link_obrez)
         l = link_obrez
-    # elif (Window_Coords[0] != 0 and Window_Coords[1] != 0 and Window_Coords[2] != 0 and Window_Coords[3] != 0):
-    #     temp_kraya = Image.open(link)
-    #     im_crop = temp_kraya.crop((Window_Coords[0], Window_Coords[1], Window_Coords[2], Window_Coords[3]))
-    #     im_crop.save(link)
-    #     l = link
     else:
         l = link
-    # print(Window_Coords)
     if lang != 'eng':
         data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
     else:
-        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words',
-                                         output_type=pytesseract.Output.DICT)
-    # print(data)
+        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
 
     return data
-
-# def listWordSearch():
-#     temp_screen = pyautogui.screenshot('temp.bmp')
-#     img_seryy = temp_screen.convert("L")
-#     list_star = pyautogui.locateCenterOnScreen(r'C:\Users\drtar\Desktop\SmartTesterForBoas\images\list_start.bmp')
-#     print(list_star)
-#     pyautogui.leftClick(list_star)
-
 
 def centerWordSearch(word: str, lang: str, cut: bool, screen_shot = 'nothing'):
     # поиск слова на экране
@@ -124,19 +89,13 @@ def centerWordSearch(word: str, lang: str, cut: bool, screen_shot = 'nothing'):
         data = lookOnScreen(lang, cut)
     else:
         data = pytesseract.image_to_data(screen_shot, lang=lang, config='--oem 3 --psm 12', output_type=pytesseract.Output.DICT)
-        #print(data)
     # получение координат
-    #print("искомое слово:" + word)
-    #print(data["text"])
     x = y = 0.1
     for d in data["text"]:
         if d.find(word) != -1:
-            #print(word)
-            #print(d)
             word_id = data["text"].index(d)
             x = data["left"][word_id] + data["width"][word_id] / 2
             y = data["top"][word_id] + data["height"][word_id] / 2
-            #print("["+str(x)+","+str(y)+"]")
     if cut:
         return [int(x)+Column_Coords[0], int(y)]
     else:
@@ -167,34 +126,14 @@ def neerestWord(word_main: str, word_sub: str, lang: str):
     sub_coords = []
     meanCoords = [0, 0]
     for i in range(len(data["text"])):
-        # print(d)
-
         if data["text"][i].find(word_main) != -1 and data["text"][i+1].find(word_sub) != -1:
-            # print("Main!")
             main_coords = [data["left"][i] + data["width"][i], data["top"][i] + data["height"][i] / 2]
             sub_coords = [data["left"][i+1] + data["width"][i+1], data["top"][i+1] + data["height"][i+1] / 2]
             global Column_Coords
             Column_Coords = [data["left"][i]-1, data["left"][i+1] + data["width"][i+1]]
     meanCoords = [(main_coords[0] + sub_coords[0]) / 2, (main_coords[1] + sub_coords[1]) / 2]
-    # print(meanCoords)
     return meanCoords
-# def retriveSettingWindCord():
-#     word_main = "Параметры"
-#     word_sub = "заказа"
-#     data = lookOnScreen("rus", False)
-#     left_top_coords = []
-#     right_down_coords = []
-#     global Window_Coords
-#     for i in range(len(data["text"])):
-#         # print(d)
-#
-#         if data["text"][i].find(word_main) != -1 and data["text"][i+1].find(word_sub) != -1:
-#             # print("Main!")
-#             Window_Coords[0], Window_Coords[1] = data["left"][i], data["top"][i]
-#             Window_Coords[2], Window_Coords[3] = GetSystemMetrics(0) - data["left"][i], GetSystemMetrics(2) - data["top"][i]
-#     #Window_Coords = [left_top_coords[0] , right_down_coords]
 
-# 2023-03-07|2023-03-0714:04:06.055323
 def findWordWithPicrure(skrin_location: str, word: str, lang: str):
     screenshot_pos = pyautogui.locateOnScreen(skrin_location)
     word_center = centerWordSearch(word, lang, False, skrin_location)
@@ -203,6 +142,13 @@ def findWordWithPicrure(skrin_location: str, word: str, lang: str):
     #print(screenshot_pos)
     #print([word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top])
     return [word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top]
+
+def WaitingUntilFind(sign_word: str) -> bool:
+    screenShot_data = lookOnScreen('rus', False)
+    for i in range(len(screenShot_data["text"])):
+        if screenShot_data["text"][i].find(sign_word) != -1:
+            return True
+    return False
 
 
 # Забираем данные для прохода по полям
@@ -247,8 +193,8 @@ print(colum_name[0][1])
 print(colum_name[1][0])
 print(colum_name[1][1])
 
+sleep_timer = .5
 running = False
-
 exit = False
 
 def startTesting(index, row):
@@ -283,24 +229,17 @@ def startTesting(index, row):
     global rows_count
     mylist = [1, 2, 3, 4, 5, 6, 7]
     try:
-        # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
-        # try:
         # Нахождение названия свойства и элемента со списком
-        # print(row[0] + '|' + row[1])
         first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
         pyautogui.leftClick(neerestFigure(frame, first_name))
         pyautogui.sleep(.2)
-        # listWordSearch()
-        # print(row[0])
         print(detect(row[0]))
         if detect(row[0]) == 'ru':
             pyautogui.leftClick(centerWordSearch(row[0], 'rus', True))
-        # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
         else:
             pyautogui.leftClick(centerWordSearch(row[0], 'eng', True))
         pyautogui.sleep(.2)
-        # print(colum_name[1][0] + '|' + colum_name[1][1])
         second_name = neerestWord(colum_name[1][0], colum_name[1][1], 'rus')
         pyautogui.leftClick(neerestFigure(frame, second_name))
         # Нахождение нужного значения
@@ -331,8 +270,10 @@ def startTesting(index, row):
             pyautogui.sleep(.1)
             pyautogui.press('down')
             pyautogui.sleep(.1)
+            # Переход на вкладку Дополнительные параметры
             pyautogui.leftClick(neerestWord("Дополнительные", "параметры", 'rus'))
-            pyautogui.sleep(.4)
+            while (WaitingUntilFind("ФИО") == False):
+                pyautogui.sleep(sleep_timer)
             if index == 0:
                 Temp_Data = centerWordSearch("ELMA", 'eng', False)
             pyautogui.doubleClick(Temp_Data)
@@ -342,7 +283,7 @@ def startTesting(index, row):
             pyautogui.keyUp('backspace')
             pyautogui.keyUp('a')
             pyautogui.keyUp('ctrl')
-            pyautogui.write(str(index)) #2023-03-07|2023-03-0714:04:06.055323
+            pyautogui.write(str(index+1)) #2023-03-07|2023-03-0714:04:06.055323
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) # centerWordSearch("OK", 'eng', False)
             bar.next()
             pyautogui.sleep(1)
@@ -352,11 +293,13 @@ def startTesting(index, row):
             pyautogui.sleep(.2)
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
             bar.next()
-            pyautogui.sleep(.5)
-            one_c = pyautogui.locateOnScreen(one_c_button)
+            while (WaitingUntilFind("Спецификация") == False):
+                pyautogui.sleep(sleep_timer)
+            # one_c = pyautogui.locateOnScreen(one_c_button)
             pyautogui.leftClick(One_C_Coords)
             bar.next()
-            pyautogui.sleep(2)
+            while (WaitingUntilFind("успешно") == False):
+                pyautogui.sleep(sleep_timer)
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.sleep(.2)
@@ -367,7 +310,8 @@ def startTesting(index, row):
             out_tab["Ссылка на json"][index] = pyperclip.paste()
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-            pyautogui.sleep(5)
+            while(WaitingUntilFind("Модель") == False):
+                pyautogui.sleep(sleep_timer)
             bar.finish()
         # create excel writer
         writer = pd.ExcelWriter(r'..\logs.xlsx')
@@ -392,31 +336,7 @@ def startTesting(index, row):
         e = sys.exc_info()[1]
         out_tab["Статус"][index] = e.args[0]
 
-        # pyautogui.sleep(.2)
-        # print(row[1] + detect(row[1]))
-        # if len(row[1].split(" ")) == 1:
-        #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-        #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-        #         pyautogui.leftClick(centerWordSearch(row[1], 'rus'))
-        #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-        #     else:
-        #         pyautogui.leftClick(centerWordSearch(row[1], 'eng'))
-        # elif len(row[1].split(" ")) == 2:
-        #     words = row[1].split(" ")
-        #     if detect(row[1]) == 'ru' or detect(row[1]) == 'uk' or detect(row[1]) == 'bk'\
-        #             or detect(row[1]) == 'bg' or detect(row[1]) == 'mk':
-        #         pyautogui.leftClick(neerestWord(words[0], words[1], 'rus'))
-        #     # elif detect(row[0]) == 'en' or detect(row[0]) == 'cy':
-        #     else:
-        #         pyautogui.leftClick(neerestWord(words[0], words[1], 'eng'))
-        # pyautogui.sleep(.2)
-        # pyautogui.leftClick(pyautogui.locateCenterOnScreen(ok_button))
-    # print(str(coords[0]) + ', ' + str(coords[1]))
-
 def primaryStart(pb):
-    # labelStatusName = Label(window, text="процесс запущен")
-    # labelStatusName.grid(column=1, row=0)
-    # btnStart.configure(state=["disabled"])
     pb.start()
     global running
     running = True
@@ -429,12 +349,6 @@ def primaryPause(pb):
     else:
         pb.start()
         running = True
-    # if btnPause["state"] == ["disabled"]:
-    #     btnPause["state"] = ["enable"]
-    # else:
-    #     btnPause["state"] = ["disabled"]
-    #labelStatusName.configure(text="процесс поставлен на паузу(для продолжения нажмите ESC)")
-    #keyboard.wait("esc")
 
 def primaryExit(pb):
     pb.stop()
@@ -448,8 +362,6 @@ def window():
     window = Tk()
     window.title("Бот-тестировщик")
     window.geometry('400x250')
-    # lbl = Label(window, text="Привет")
-    # lbl.grid(column=0, row=0)
     labelStatus = Label(window, text="Статус:")
     labelStatus.grid(column=0, row=0)
     pb = ttk.Progressbar(window, orient="horizontal", length=150, mode="indeterminate")
@@ -460,7 +372,6 @@ def window():
     labelCount.grid(column=3, row=0)
     btnStart = Button(window, text="Старт", bg="#29f716", activebackground="#82f078", command=lambda:  primaryStart(pb))
     btnStart.grid(column=0, row=1)
-    # print("test!!!!!!!!!11")
     btnPause = Button(window, text="Пауза", bg="#2279f2", activebackground="#78aaf0", command=lambda: primaryPause(pb))
     btnPause.grid(column=1, row=1)
     btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit(pb))
