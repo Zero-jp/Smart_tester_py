@@ -6,28 +6,19 @@ import time
 import pytesseract # оптический анализатор(нейронка)
 import pandas as pd # считывание из таблицы входных данных
 import math
-import statistics
 from PIL import Image as PilImage, ImageFilter
 from langdetect import detect
 import pyperclip
 import sys
-import pathlib
-from pathlib import Path
 from progress.bar import IncrementalBar
-# from pynput import keyboard
 from pynput import keyboard
 from tkinter import *
 from tkinter import ttk
 from threading import Thread
-
 cmb = [{keyboard.Key.esc}]
-
 current = set()
-
-
 def execute():
     print("Detected hotkey")
-
 
 def on_press(key):
     if any([key in z for z in cmb]):
@@ -35,13 +26,9 @@ def on_press(key):
         if any(all(k in current for k in z) for z in cmb):
             execute()
 
-
 def on_release(key):
     if any([key in z for z in cmb]):
         raise SystemExit(1)
-
-
-
 
 pyautogui.FAILSAFE = False
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -49,17 +36,7 @@ user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
 One_C_Coords = [280, 70]
-# Window_Coords = [0, 0, 0, 0]
 
-# def onHotKeyPress(key):
-#     raise SystemExit(1)
-
-# def leftClick(coord):
-#     # клик
-#     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, coord[0], coord[1])
-#     # time.sleep(.1)
-#     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, coord[0], coord[1])
-#     print("Click.")
 def lookOnScreen(lang: str, is_obrez: bool):
     temp_screen = pyautogui.screenshot(r'..\images\temp.bmp')
     img_seryy = temp_screen.convert("L")# .save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
@@ -120,7 +97,6 @@ def neerestFigure(link: str, coords: list):
     return imageCoords
 
 def neerestWord(word_main: str, word_sub: str, lang: str):
-    # print(word_main)
     data = lookOnScreen(lang, False)
     main_coords = []
     sub_coords = []
@@ -137,10 +113,6 @@ def neerestWord(word_main: str, word_sub: str, lang: str):
 def findWordWithPicrure(skrin_location: str, word: str, lang: str):
     screenshot_pos = pyautogui.locateOnScreen(skrin_location)
     word_center = centerWordSearch(word, lang, False, skrin_location)
-    #print("Поиск со скриншотом. Отладка:")
-    #print(word_center)
-    #print(screenshot_pos)
-    #print([word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top])
     return [word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top]
 
 def WaitingUntilFind(sign_word: str) -> bool:
@@ -176,13 +148,10 @@ window_color_2 = r'..\images\window_color_2.bmp'
 window_color_3 = r'..\images\window_color_3.bmp'
 error_logo = r'..\images\error_logo.bmp'
 start_name_project = r'..\images\start_name_project.jpg'
-# retriveSettingWindCord()
 
-# print(data.columns[0])
 colum_name = []
 columns_count = data.shape[1]
 Temp_Data = [0, 0]
-# print(data.shape[0])
 rows_count = data.shape[0]
 for index in range(columns_count):
     colum_name.append(data.columns[index].split(' '))
@@ -193,7 +162,7 @@ print(colum_name[0][1])
 print(colum_name[1][0])
 print(colum_name[1][1])
 
-sleep_timer = .5
+sleep_timer = .1
 running = False
 exit = False
 
@@ -220,9 +189,6 @@ def startTesting(index, row):
     global window_color_3
     global error_logo
     global start_name_project
-    # retriveSettingWindCord()
-
-    # print(data.columns[0])
     global colum_name
     global columns_count
     global Temp_Data
@@ -293,7 +259,6 @@ def startTesting(index, row):
             bar.next()
             while (WaitingUntilFind("Спецификация") == False):
                 pyautogui.sleep(sleep_timer)
-            # one_c = pyautogui.locateOnScreen(one_c_button)
             pyautogui.leftClick(One_C_Coords)
             bar.next()
             while (WaitingUntilFind("успешно") == False):
@@ -327,7 +292,6 @@ def startTesting(index, row):
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
         pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-        # pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus'))
         e = sys.exc_info()[1]
         out_tab["Статус"][index] = e.args[0]
 
