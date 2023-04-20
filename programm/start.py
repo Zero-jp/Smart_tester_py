@@ -287,8 +287,6 @@ def startTesting(index, row):
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_ok_button)) # centerWordSearch("OK", 'eng', False)
             bar.next()
             pyautogui.sleep(1)
-            # if pyautogui.locateCenterOnScreen(use_config_wind) != None:
-            # pyautogui.leftClick(pyautogui.locateCenterOnScreen(active_yes_button))# findWordWithPicrure(use_config_wind, "Да", 'rus'))
             pyautogui.press('enter')
             pyautogui.sleep(.2)
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(show_spec_button))
@@ -310,7 +308,7 @@ def startTesting(index, row):
             out_tab["Ссылка на json"][index] = pyperclip.paste()
             bar.next()
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(config_set_button))
-            while(WaitingUntilFind("Модель") == False):
+            while(WaitingUntilFind("фасадов") == False):
                 pyautogui.sleep(sleep_timer)
             bar.finish()
         # create excel writer
@@ -324,9 +322,6 @@ def startTesting(index, row):
             print("Спец ошибка")
             print(centerWordSearch("Спецификация", 'rus', False))
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
-        # if centerWordSearch("ФИО", 'rus', False) != [0,0]:
-        #     print("Имя ошибка")
-        #     pyautogui.leftClick(pyautogui.leftClick(neerestWord("Параметры", "кухни", 'rus')))
         if centerWordSearch("Буфер", 'rus', False) != [0,-7]:
             print("Буф ошибка")
             pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
