@@ -36,13 +36,17 @@ user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
 One_C_Coords = [280, 70]
+# C:\Users\Valeria\Desktop\Smart_tester_py
+# C:\Users\drtar\Desktop\SmartTesterForBoas
+path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
 
 def lookOnScreen(lang: str, is_obrez: bool):
-    temp_screen = pyautogui.screenshot(r'..\images\temp.bmp')
+    global path
+    temp_screen = pyautogui.screenshot(path+r'\images\temp.bmp')
     img_seryy = temp_screen.convert("L")# .save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
-    img_seryy.filter(ImageFilter.DETAIL).save(r"..\images\temp_kraya.bmp")
-    link_obrez = r"..\images\temp_kraya_obrez.bmp"
-    link = r"..\images\temp_kraya.bmp"
+    img_seryy.filter(ImageFilter.DETAIL).save(path+r"\images\temp_kraya.bmp")
+    link_obrez = path+r"\images\temp_kraya_obrez.bmp"
+    link = path+r"\images\temp_kraya.bmp"
     l = ""
     if is_obrez:
         temp_kraya = PilImage.open(link)
@@ -124,30 +128,31 @@ def WaitingUntilFind(sign_word: str) -> bool:
 
 
 # Забираем данные для прохода по полям
+
 data = pd.DataFrame(pd.read_excel(
-    io="..\Копия (Агрегатор Т1) ТК для тестирования интеграции между ELMA и IMOS (3).xlsx",
+    io=path+r'\Копия (Агрегатор Т1) ТК для тестирования интеграции между ELMA и IMOS (3).xlsx',
     engine='openpyxl'))
 out_tab = data.copy()
-frame = r'..\images\frame.bmp'
-full_frame = r'..\images\full_frame.bmp'
-ok_button = r'..\images\ok_button.bmp'
-error_wind = r'..\images\error_wind.bmp'
-active_ok_button = r'..\images\active_ok_button.bmp'
-active_ok_button_error = r'..\images\active_ok_button_error.bmp'
-text_field = r'..\images\text_field.bmp'
-use_config_wind = r'..\images\use_config_wind.bmp'
-active_yes_button = r'..\images\active_yes_button.bmp'
-show_spec_button = r'..\images\show_spec_button.bmp'
-one_c_button = r'..\images\one_c_button.jpg'
-exit_button = r'..\images\exit_button.bmp'
-config_set_button = r'..\images\config_set_button.bmp'
-ok_cancel_toolbar = r'..\images\ok_cancel_toolbar.bmp'
-error_wind_color = r'..\images\error_wind_color.bmp'
-window_color_1 = r'..\images\window_color_1.bmp'
-window_color_2 = r'..\images\window_color_2.bmp'
-window_color_3 = r'..\images\window_color_3.bmp'
-error_logo = r'..\images\error_logo.bmp'
-start_name_project = r'..\images\start_name_project.jpg'
+frame = path+r'\images\frame.bmp'
+full_frame = path+r'\images\full_frame.bmp'
+ok_button = path+r'\images\ok_button.bmp'
+error_wind = path+r'\images\error_wind.bmp'
+active_ok_button = path+r'\images\active_ok_button.bmp'
+active_ok_button_error = path+r'\images\active_ok_button_error.bmp'
+text_field = path+r'\images\text_field.bmp'
+use_config_wind = path+r'\images\use_config_wind.bmp'
+active_yes_button = path+r'\images\active_yes_button.bmp'
+show_spec_button = path+r'\images\show_spec_button.bmp'
+one_c_button = path+r'\images\one_c_button.jpg'
+exit_button = path+r'\images\exit_button.bmp'
+config_set_button = path+r'\images\config_set_button.bmp'
+ok_cancel_toolbar = path+r'\images\ok_cancel_toolbar.bmp'
+error_wind_color = path+r'\images\error_wind_color.bmp'
+window_color_1 = path+r'\images\window_color_1.bmp'
+window_color_2 = path+r'\images\window_color_2.bmp'
+window_color_3 = path+r'\images\window_color_3.bmp'
+error_logo = path+r'\images\error_logo.bmp'
+start_name_project = path+r'\images\start_name_project.jpg'
 
 colum_name = []
 columns_count = data.shape[1]
@@ -167,6 +172,7 @@ running = False
 exit = False
 
 def startTesting(index, row):
+    global path
     global data
     global out_tab
     global frame
@@ -277,7 +283,7 @@ def startTesting(index, row):
                 pyautogui.sleep(sleep_timer)
             bar.finish()
         # create excel writer
-        writer = pd.ExcelWriter(r'..\logs.xlsx')
+        writer = pd.ExcelWriter(path+r'\logs.xlsx')
         # write dataframe to excel sheet named 'marks'
         out_tab.to_excel(writer, 'marks')
         # save the excel file
@@ -317,10 +323,19 @@ def primaryExit(pb):
     else:
         exit = True
 
+readyToExit = False
+def fatalExit(window):
+    # global readyToExit
+    # while readyToExit != True :
+    #     pyautogui.sleep(sleep_timer)
+    window.destroy()
+    sys.exit(1)
+
 def window():
     window = Tk()
     window.title("Бот-тестировщик")
-    window.geometry('400x250')
+    # window.geometry('400x250')
+    window.resizable(False, False)
     labelStatus = Label(window, text="Статус:")
     labelStatus.grid(column=0, row=0)
     pb = ttk.Progressbar(window, orient="horizontal", length=150, mode="indeterminate")
@@ -352,5 +367,8 @@ for index, row in data.iterrows():
         startTesting(index, row)
         time.sleep(0.2)
     if exit == True:
-        t.join()
-        sys.exit(1)
+        break
+        #t.join()
+        #readyToExit = True
+sys.exit()
+raise SystemExit(1)
