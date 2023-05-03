@@ -39,7 +39,7 @@ One_C_Coords = [280, 70]
 # C:\Users\Valeria\Desktop\Smart_tester_py
 # C:\Users\drtar\Desktop\SmartTesterForBoas
 # C:\Users\Xeon\Desktop\Smart_tester_py
-path = r'C:\Users\Xeon\Desktop\Smart_tester_py'
+path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
 
 def lookOnScreen(lang: str, is_obrez: bool):
     global path
@@ -353,7 +353,7 @@ def window():
     btnStop.grid(column=2, row=1)
     window.mainloop()
 
-t = Thread(target=window)
+t = Thread(target=window, daemon=True)
 t.start()
 
 for index, row in data.iterrows():
