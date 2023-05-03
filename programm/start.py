@@ -371,5 +371,5 @@ for index, row in data.iterrows():
         break
         #t.join()
         #readyToExit = True
-sys.exit()
 raise SystemExit(1)
+sys.exit()
