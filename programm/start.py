@@ -316,6 +316,7 @@ def primaryPause(pb):
         pb.start()
         running = True
 
+inProcess = False
 def primaryExit(pb):
     pb.stop()
     global exit
@@ -329,7 +330,6 @@ def primaryExit(pb):
         exit = True
 
 readyToExit = False
-inProcess = False
 def fatalExit(window):
     # global readyToExit
     # while readyToExit != True :
