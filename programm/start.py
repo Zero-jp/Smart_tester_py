@@ -319,12 +319,17 @@ def primaryPause(pb):
 def primaryExit(pb):
     pb.stop()
     global exit
+    global t
+    if inProcess == False:
+        window.destroy()
+        raise SystemExit(1)
     if exit == True:
         exit = False
     else:
         exit = True
 
 readyToExit = False
+inProcess = False
 def fatalExit(window):
     # global readyToExit
     # while readyToExit != True :
