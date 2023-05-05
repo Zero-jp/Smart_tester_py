@@ -362,7 +362,6 @@ t = Thread(target=window, daemon=True)
 t.start()
 
 for index, row in data.iterrows():
-    global inProcess
     inProcess = True
     if running == False:
         while running == False:
