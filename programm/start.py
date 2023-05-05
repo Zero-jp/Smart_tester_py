@@ -39,7 +39,7 @@ One_C_Coords = [280, 70]
 # C:\Users\Valeria\Desktop\Smart_tester_py
 # C:\Users\drtar\Desktop\SmartTesterForBoas
 # C:\Users\Xeon\Desktop\Smart_tester_py
-path = r'C:\Users\drtar\Desktop\SmartTesterForBoas'
+path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
 
 def lookOnScreen(lang: str, is_obrez: bool):
     global path
