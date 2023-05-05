@@ -39,7 +39,7 @@ One_C_Coords = [280, 70]
 # C:\Users\Valeria\Desktop\Smart_tester_py
 # C:\Users\drtar\Desktop\SmartTesterForBoas
 # C:\Users\Xeon\Desktop\Smart_tester_py
-path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
+path = r'C:\Users\drtar\Desktop\SmartTesterForBoas'
 
 def lookOnScreen(lang: str, is_obrez: bool):
     global path
@@ -56,10 +56,7 @@ def lookOnScreen(lang: str, is_obrez: bool):
         l = link_obrez
     else:
         l = link
-    if lang != 'eng':
-        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
-    else:
-        data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
+    data = pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
 
     return data
 
@@ -320,13 +317,11 @@ inProcess = False
 def primaryExit(pb):
     pb.stop()
     global exit
-    global t
+    print("Попался мелкий выход")
     if inProcess == False:
         window.destroy()
         raise SystemExit(1)
-    if exit == True:
-        exit = False
-    else:
+    if exit == False:
         exit = True
 
 readyToExit = False
@@ -334,8 +329,11 @@ def fatalExit(window):
     # global readyToExit
     # while readyToExit != True :
     #     pyautogui.sleep(sleep_timer)
+    print("Попался капитальный выход")
     window.destroy()
     sys.exit(1)
+
+
 
 def window():
     window = Tk()
@@ -356,26 +354,31 @@ def window():
     btnPause.grid(column=1, row=1)
     btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit(pb))
     btnStop.grid(column=2, row=1)
+    # window.protocol("WM_DELETE_WINDOW", primaryExit(pb))
     window.mainloop()
 
-t = Thread(target=window, daemon=True)
-t.start()
+while exit == False:
+    t = Thread(target=window, daemon=True)
+    t.start()
 
-for index, row in data.iterrows():
-    inProcess = True
-    if running == False:
-        while running == False:
-            # ожидаем повторного нажатия кнопочки
-            time.sleep(2)
-        print("Пройден тест-кейс "+str(index))
-        startTesting(index, row)
-    else:
+    for index, row in data.iterrows():
+        inProcess = True
+        print("Start")
+        if running == False:
+            while running == False:
+                if (exit == True):
+                    raise SystemExit(1)
+                print("пауза")
+                print(exit)
+                print(running)
+                # ожидаем повторного нажатия кнопочки
+                time.sleep(2)
+            print("Насквозь")
         print("Пройден тест-кейс "+str(index))
         startTesting(index, row)
         time.sleep(0.2)
-    if exit == True:
-        break
-        #t.join()
-        #readyToExit = True
-raise SystemExit(1)
-sys.exit()
+        if exit == True:
+            break
+            #t.join()
+            #readyToExit = True
+    raise SystemExit(1)
