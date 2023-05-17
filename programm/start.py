@@ -43,6 +43,7 @@ Exit_Coords_Big = [0, 0]
 # C:\Users\Xeon\Desktop\Smart_tester_py
 path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
 
+
 def lookOnScreen(lang: str, is_obrez: bool):#, is_centering: False):
     global path
     temp_screen = pyautogui.screenshot(path+r'\images\temp.bmp')
