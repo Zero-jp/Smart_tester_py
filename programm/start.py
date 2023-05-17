@@ -76,7 +76,7 @@ def centerWordSearch(word: str, lang: str, cut: bool, screen_shot = 'nothing'):
     # получить все данные из изображения
     data = {}
     if screen_shot == 'nothing':
-        data = lookOnScreen(lang, cut)
+        data = lookOnScreen(lang, cut, False)
     else:
         data = pytesseract.image_to_data(screen_shot, lang=lang, config='--oem 3 --psm 12', output_type=pytesseract.Output.DICT)
     # получение координат
@@ -110,7 +110,7 @@ def neerestFigure(link: str, coords: list):
     return imageCoords
 
 def neerestWord(word_main: str, word_sub: str, lang: str):
-    data = lookOnScreen(lang, False)
+    data = lookOnScreen(lang, False, False)
     main_coords = []
     sub_coords = []
     meanCoords = [0, 0]
@@ -129,7 +129,7 @@ def findWordWithPicrure(skrin_location: str, word: str, lang: str):
     return [word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top]
 
 def WaitingUntilFind(sign_word: str) -> bool:
-    screenShot_data = lookOnScreen('rus', False)
+    screenShot_data = lookOnScreen('rus', False, False)
     for i in range(len(screenShot_data["text"])):
         if screenShot_data["text"][i].find(sign_word) != -1:
             return True
