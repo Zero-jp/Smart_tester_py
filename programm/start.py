@@ -36,12 +36,14 @@ user_path_IGOR = "SmartTesterForBoas"
 user_path_LERA = "Smart_tester_py"
 Column_Coords = [0, 0]
 One_C_Coords = [280, 70]
+Exit_Coords_Little = [0, 0]
+Exit_Coords_Big = [0, 0]
 # C:\Users\Valeria\Desktop\Smart_tester_py
 # C:\Users\drtar\Desktop\SmartTesterForBoas
 # C:\Users\Xeon\Desktop\Smart_tester_py
 path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
 
-def lookOnScreen(lang: str, is_obrez: bool):
+def lookOnScreen(lang: str, is_obrez: bool, is_centering: False):
     global path
     temp_screen = pyautogui.screenshot(path+r'\images\temp.bmp')
     img_seryy = temp_screen.convert("L")# .save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
@@ -49,6 +51,15 @@ def lookOnScreen(lang: str, is_obrez: bool):
     link_obrez = path+r"\images\temp_kraya_obrez.bmp"
     link = path+r"\images\temp_kraya.bmp"
     l = ""
+    if is_centering:
+        temp_kraya = PilImage.open(link).crop((
+            (GetSystemMetrics(0) - 700) // 2, # GetSystemMetrics(0) - width
+            (GetSystemMetrics(1) - 300) // 2,
+            (GetSystemMetrics(0) + 700) // 2,
+            (GetSystemMetrics(1) + 300) // 2)
+        )
+        temp_kraya.save(path+r"\images\problem_wind.bmp")
+        return pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
     if is_obrez:
         temp_kraya = PilImage.open(link)
         im_crop = temp_kraya.crop((Column_Coords[0], 0, Column_Coords[1], GetSystemMetrics(1)))
@@ -197,6 +208,10 @@ def startTesting(index, row):
     global columns_count
     global Temp_Data
     global rows_count
+
+    global Exit_Coords_Little
+    global Exit_Coords_Big
+
     mylist = [1, 2, 3, 4, 5, 6, 7]
     # try:
     bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
@@ -268,10 +283,15 @@ def startTesting(index, row):
         while (WaitingUntilFind("успешно") == False):
             pyautogui.sleep(sleep_timer)
         bar.next()
-        pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+        lookOnScreen('rus', False, True)
+        if index == 0:
+            Exit_Coords_Little = pyautogui.locateCenterOnScreen(exit_button)
+        pyautogui.leftClick(Exit_Coords_Little)
         pyautogui.sleep(.2)
         bar.next()
-        pyautogui.leftClick(pyautogui.locateCenterOnScreen(exit_button))
+        if index == 0:
+            Exit_Coords_Big = pyautogui.locateCenterOnScreen(exit_button)
+        pyautogui.leftClick(Exit_Coords_Big)
         pyautogui.sleep(.2)
         out_tab["Статус"][index] = "Succes"
         out_tab["Ссылка на json"][index] = pyperclip.paste()
@@ -281,7 +301,7 @@ def startTesting(index, row):
             pyautogui.sleep(sleep_timer)
         bar.finish()
     # create excel writer
-    writer = pd.ExcelWriter(path+r'\logs.xlsx')
+    writer = pd.ExcelWriter(path+r'\logs.xlsx')# посмотретт формат csv
     # write dataframe to excel sheet named 'marks'
     out_tab.to_excel(writer, 'marks')
     # save the excel file
@@ -333,13 +353,17 @@ def fatalExit(window):
     window.destroy()
     sys.exit(1)
 
+def doSomethingOnExit():
+    while exit == False:
+        print("пауза")
+        time.sleep(2)
 
 
 def window():
     window = Tk()
     window.title("Бот-тестировщик")
     # window.geometry('400x250')
-    window.resizable(False, False)
+    # window.resizable(False, False)
     labelStatus = Label(window, text="Статус:")
     labelStatus.grid(column=0, row=0)
     pb = ttk.Progressbar(window, orient="horizontal", length=150, mode="indeterminate")
@@ -354,6 +378,11 @@ def window():
     btnPause.grid(column=1, row=1)
     btnStop = Button(window, text="Стоп", bg="#f22222", activebackground="#f05959", command= lambda: primaryExit(pb))
     btnStop.grid(column=2, row=1)
+    # window.resizable(True, True)
+    # window.update_idletasks()
+    # window.overrideredirect(True)
+    # window.bind('<ESC>', primaryExit(pb))
+    # window.anchor("center")
     # window.protocol("WM_DELETE_WINDOW", primaryExit(pb))
     window.mainloop()
 
@@ -363,17 +392,17 @@ while exit == False:
 
     for index, row in data.iterrows():
         inProcess = True
-        print("Start")
+        # print("Start")
         if running == False:
             while running == False:
                 if (exit == True):
                     raise SystemExit(1)
-                print("пауза")
-                print(exit)
-                print(running)
+                # print("пауза")
+                # print(exit)
+                # print(running)
                 # ожидаем повторного нажатия кнопочки
                 time.sleep(2)
-            print("Насквозь")
+            # print("Насквозь")
         print("Пройден тест-кейс "+str(index))
         startTesting(index, row)
         time.sleep(0.2)
