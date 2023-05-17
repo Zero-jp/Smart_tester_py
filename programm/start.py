@@ -41,9 +41,9 @@ Exit_Coords_Big = [0, 0]
 # C:\Users\Valeria\Desktop\Smart_tester_py
 # C:\Users\drtar\Desktop\SmartTesterForBoas
 # C:\Users\Xeon\Desktop\Smart_tester_py
-path = r'C:\Users\Valeria\Desktop\Smart_tester_py'
+path = r'C:\Users\drtar\Desktop\SmartTesterForBoas'
 
-def lookOnScreen(lang: str, is_obrez: bool, is_centering: False):
+def lookOnScreen(lang: str, is_obrez: bool):#, is_centering: False):
     global path
     temp_screen = pyautogui.screenshot(path+r'\images\temp.bmp')
     img_seryy = temp_screen.convert("L")# .save(r'C:\Users\drtar\Desktop\SmartTesterForBoas\programm\temp_kraya.bmp')
@@ -51,15 +51,15 @@ def lookOnScreen(lang: str, is_obrez: bool, is_centering: False):
     link_obrez = path+r"\images\temp_kraya_obrez.bmp"
     link = path+r"\images\temp_kraya.bmp"
     l = ""
-    if is_centering:
-        temp_kraya = PilImage.open(link).crop((
-            (GetSystemMetrics(0) - 700) // 2, # GetSystemMetrics(0) - width
-            (GetSystemMetrics(1) - 300) // 2,
-            (GetSystemMetrics(0) + 700) // 2,
-            (GetSystemMetrics(1) + 300) // 2)
-        )
-        temp_kraya.save(path+r"\images\problem_wind.bmp")
-        return pytesseract.image_to_data(l, lang=lang, config='--oem 3 --psm 12 words', output_type=pytesseract.Output.DICT)
+    # if is_centering:
+    #     temp_kraya = PilImage.open(link).crop((
+    #         (GetSystemMetrics(0) - 700) // 2, # GetSystemMetrics(0) - width
+    #         (GetSystemMetrics(1) - 300) // 2,
+    #         (GetSystemMetrics(0) + 700) // 2,
+    #         (GetSystemMetrics(1) + 300) // 2)
+    #     )
+    #     temp_kraya.save(path+r"\images\problem_wind.bmp")
+    #     return r"\images\problem_wind.bmp"
     if is_obrez:
         temp_kraya = PilImage.open(link)
         im_crop = temp_kraya.crop((Column_Coords[0], 0, Column_Coords[1], GetSystemMetrics(1)))
@@ -76,7 +76,7 @@ def centerWordSearch(word: str, lang: str, cut: bool, screen_shot = 'nothing'):
     # получить все данные из изображения
     data = {}
     if screen_shot == 'nothing':
-        data = lookOnScreen(lang, cut, False)
+        data = lookOnScreen(lang, cut)#, False)
     else:
         data = pytesseract.image_to_data(screen_shot, lang=lang, config='--oem 3 --psm 12', output_type=pytesseract.Output.DICT)
     # получение координат
@@ -110,7 +110,7 @@ def neerestFigure(link: str, coords: list):
     return imageCoords
 
 def neerestWord(word_main: str, word_sub: str, lang: str):
-    data = lookOnScreen(lang, False, False)
+    data = lookOnScreen(lang, False)#, False)
     main_coords = []
     sub_coords = []
     meanCoords = [0, 0]
@@ -129,7 +129,7 @@ def findWordWithPicrure(skrin_location: str, word: str, lang: str):
     return [word_center[0]+screenshot_pos.left, word_center[1]+screenshot_pos.top]
 
 def WaitingUntilFind(sign_word: str) -> bool:
-    screenShot_data = lookOnScreen('rus', False, False)
+    screenShot_data = lookOnScreen('rus', False)#, False)
     for i in range(len(screenShot_data["text"])):
         if screenShot_data["text"][i].find(sign_word) != -1:
             return True
@@ -283,9 +283,12 @@ def startTesting(index, row):
         while (WaitingUntilFind("успешно") == False):
             pyautogui.sleep(sleep_timer)
         bar.next()
-        lookOnScreen('rus', False, True)
         if index == 0:
-            Exit_Coords_Little = pyautogui.locateCenterOnScreen(exit_button)
+            Exit_Coords_Little = pyautogui.locateOnScreen(exit_button, region=(
+                (GetSystemMetrics(0) - 700)// 2,
+                (GetSystemMetrics(1) - 300) // 2,
+                700, 300), confidence=0.95)
+            # Exit_Coords_Little = pyautogui.locateCenterOnScreen(exit_button)
         pyautogui.leftClick(Exit_Coords_Little)
         pyautogui.sleep(.2)
         bar.next()
