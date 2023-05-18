@@ -215,6 +215,9 @@ def startTesting(index, row):
 
     mylist = [1, 2, 3, 4, 5, 6, 7]
     try:
+        while(WaitingUntilFind("фасадов") == False):
+            pyautogui.sleep(sleep_timer)
+        pyautogui.sleep(sleep_timer)
         bar = IncrementalBar("Тест-кейс " + str(index+1), max=len(mylist))
         # Нахождение названия свойства и элемента со списком
         first_name = neerestWord(colum_name[0][0], colum_name[0][1], 'rus')
@@ -231,8 +234,6 @@ def startTesting(index, row):
         # Нахождение нужного значения
         for index_value in range(columns_count-1):
             index_value += 1
-            while(WaitingUntilFind("фасадов") == False):
-                pyautogui.sleep(sleep_timer)
             if len(row[index_value].split(" ")) == 1:
                 if detect(row[index_value]) == 'ru' or detect(row[index_value]) == 'uk' or detect(row[index_value]) == 'bk' \
                         or detect(row[index_value]) == 'bg' or detect(row[index_value]) == 'mk':
